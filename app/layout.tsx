@@ -20,7 +20,7 @@ const bebasNeue = localFont({
   src: [
     { path: "/fonts/BebasNeue-Regular.ttf", weight: "400", style: "normal" },
   ],
-  variable: "--bebas-neue", // for later use specify variable to call
+  variable: "--bebas-neue", // for later use, specify variable to call
 });
 
 // title and description for SEO
