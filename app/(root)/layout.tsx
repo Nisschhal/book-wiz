@@ -32,7 +32,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
     await db
       .update(users)
-      .set({ lastActivityDate: new Date().toISOString() })
+      .set({ lastActivityDate: new Date() })
       .where(eq(users.email, session.user.email!));
   });
 
