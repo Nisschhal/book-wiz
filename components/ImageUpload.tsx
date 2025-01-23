@@ -16,11 +16,16 @@ const {
   },
 } = config;
 
+const DOMAIN =
+  process.env.NODE_ENV !== "production"
+    ? config.env.apiEndpoint
+    : config.env.prodApiEndpoint;
+
 // calling the backend api/auth/imagekit
 const authenticator = async () => {
   try {
     // from the api route
-    const response = await fetch(`${config.env.apiEndpoint}/api/auth/imagekit`);
+    const response = await fetch(`${DOMAIN}/api/auth/imagekit`);
     if (!response.ok) {
       const errorText = await response.text();
 
