@@ -90,7 +90,6 @@ export const { POST } = serve<InitialData>(async (context) => {
   await context.run("new-signup", async () => {
     console.log(`Sending welcome email to ${email}...`);
     await sendWelcomeEmail(email, fullName);
-    await sendVerificationEmail(email, "123");
   });
 
   console.log("Welcome email sent. Sleeping for 1 minute...");
