@@ -5,12 +5,30 @@ import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { hash } from "bcryptjs";
 import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
+import ratelimit from "../ratelimit";
+import { redirect } from "next/navigation";
 
 // you can pick types from auth credentials
 export const signInWithCredentials = async (
   params: Pick<AuthCredentials, "email" | "password">,
 ) => {
   const { email, password } = params;
+
+  // add rate limit, incase bot or dos attack
+  /**
+   * get the user ip address or default ip: 127.0.0.1
+   * use that ip address to set limit
+   */
+  const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+
+  const { success, reset } = await ratelimit.limit(ip);
+  console.log("Rate limit result:", { ip, success, reset });
+
+  if (!success) {
+    console.log("Rate limit enforced, redirecting...");
+    redirect("/too-fast");
+  }
 
   try {
     const result = await signIn("credentials", {
@@ -33,6 +51,22 @@ export const signInWithCredentials = async (
 export const signUp = async (params: AuthCredentials) => {
   const { fullName, email, password, universityId, universityCard } = params;
 
+  // add rate limit, incase bot or dos attack
+  /**
+   * get the user ip address or default ip: 127.0.0.1
+   * use that ip address to set limit
+   */
+  const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+
+  const { success, reset } = await ratelimit.limit(ip);
+  console.log("Rate limit result:", { ip, success, reset });
+
+  if (!success) {
+    console.log("Rate limit enforced, redirecting...");
+    redirect("/too-fast");
+  }
+
+  // Continue with the rest of the signup logic
   const existingUser = await db
     .select()
     .from(users)
