@@ -8,6 +8,8 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import ratelimit from "../ratelimit";
 import { redirect } from "next/navigation";
+import { workflowClient } from "../workflow";
+import config from "../config";
 
 // you can pick types from auth credentials
 export const signInWithCredentials = async (
@@ -85,6 +87,15 @@ export const signUp = async (params: AuthCredentials) => {
       password: hashedPassword,
       universityId,
       universityCard,
+    });
+
+    // trigger upstash workflow
+    await workflowClient.trigger({
+      url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
+      body: {
+        email,
+        fullName,
+      },
     });
 
     // TODO: auto sign in when success
