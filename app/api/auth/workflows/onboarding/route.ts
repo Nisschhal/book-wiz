@@ -139,32 +139,22 @@ export const { POST } = serve<InitialData>(async (context) => {
 
   // Infinite loop for checking user activity
   while (true) {
-    console.log(`Checking user state for ${email}...`);
-
-    const state = await context.run("check-user-state", async () => {
-      return await getUserState(email);
-    });
-
-    console.log(`User state: ${state}`);
-
-    if (state === "non-active") {
-      // Prevent sending duplicate emails by checking last email timestamp
-      const now = new Date();
-      if (
-        !lastEmailSent ||
-        now.getTime() - lastEmailSent.getTime() > ONE_MINUTE_IN_MS
-      ) {
-        console.log(`Sending check-in email to ${email}...`);
-        await context.run("send-email-non-active", async () => {
-          await sendCheckinEmail(email, fullName);
-        });
-        lastEmailSent = new Date(); // Update last email sent time
-      } else {
-        console.log(`Skipping email for ${email}, sent recently.`);
-      }
+    // Prevent sending duplicate emails by checking last email timestamp
+    const now = new Date();
+    if (
+      !lastEmailSent ||
+      now.getTime() - lastEmailSent.getTime() > ONE_MINUTE_IN_MS
+    ) {
+      console.log(`Sending check-in email to ${email}...`);
+      await context.run("send-email-non-active", async () => {
+        await sendCheckinEmail(email, fullName);
+      });
+      lastEmailSent = new Date(); // Update last email sent time
+    } else {
+      console.log(`Skipping email for ${email}, sent recently.`);
     }
-
-    console.log("Sleeping for 1 minute...");
-    await context.sleep("wait-for-1-minute", ONE_MINUTE_IN_MS);
   }
+
+  console.log("Sleeping for 1 minute...");
+  await context.sleep("wait-for-1-minute", ONE_MINUTE_IN_MS);
 });
