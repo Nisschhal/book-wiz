@@ -10,6 +10,10 @@ import ratelimit from "../ratelimit";
 import { redirect } from "next/navigation";
 import { workflowClient } from "../workflow";
 import config from "../config";
+const DOMAIN =
+  process.env.NODE_ENV !== "production"
+    ? config.env.apiEndpoint
+    : config.env.prodApiEndpoint;
 
 // you can pick types from auth credentials
 export const signInWithCredentials = async (
@@ -89,9 +93,10 @@ export const signUp = async (params: AuthCredentials) => {
       universityCard,
     });
 
+    console.log("Triggring", DOMAIN);
     // trigger upstash workflow
     await workflowClient.trigger({
-      url: `${config.env.prodApiEndpoint}/api/auth/workflows/onboarding`,
+      url: `${DOMAIN}/api/auth/workflows/onboarding`,
       body: {
         email,
         fullName,
