@@ -6,7 +6,8 @@ import localFont from "next/font/local";
 
 import "./globals.css";
 import { ReactNode } from "react";
-
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 const ibmPlexSans = localFont({
   src: [
     { path: "/fonts/IBMPlexSans-Regular.ttf", weight: "400", style: "normal" },
@@ -30,17 +31,20 @@ export const metadata: Metadata = {
     "BookWiz is a book borrowing univerisity library management solution",
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const RootLayout = async ({ children }: { children: ReactNode }) => {
+  const session = await auth();
   return (
     <html lang="en">
-      <body
-        // using ibm using class name
-        // using bebas via its variable name
-        className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}
-      >
-        {children}
-        <Toaster />
-      </body>
+      <SessionProvider session={session}>
+        <body
+          // using ibm using class name
+          // using bebas via its variable name
+          className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}
+        >
+          {children}
+          <Toaster />
+        </body>
+      </SessionProvider>
     </html>
   );
 };
