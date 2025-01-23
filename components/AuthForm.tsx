@@ -119,7 +119,7 @@ const AuthForm = <T extends FieldValues>({
       <p className="text-center text-base font-medium">
         {isSignin ? "New to BookWiz? " : "Already have an account? "}
         <Link
-          href={isSignin ? "/signup" : "/signin"}
+          href={isSignin ? "/sign-up" : "/sign-in"}
           className="font-bold text-primary"
         >
           {isSignin ? "Create an account" : "Sign in"}
