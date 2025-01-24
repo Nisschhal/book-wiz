@@ -38,17 +38,17 @@ export const { POST } = serve<InitialData>(async (context) => {
   // check each minute
   while (true) {
     // get the user state
-    const state = await context.run("check-user-state", async () => {
-      return await getUserState(email);
-    });
+    // const state = await context.run("check-user-state", async () => {
+    // return await getUserState(email);
+    // });
 
     // if user is not active send this
-    if (state === "non-active") {
-      await context.run("send-email-non-active", async () => {
-        await sendCheckinEmail(email, fullName);
-      });
-      // if user is active send this
-    }
+    // if (state === "non-active") {
+    // await context.run("send-email-non-active", async () => {
+    await sendCheckinEmail(email, fullName);
+    // });
+    // if user is active send this
+    // }
     // else if (state === "active") {
     //   await context.run("send-email-active", async () => {
     //     await sendEmail("Send newsletter to active users", email);
