@@ -11,6 +11,9 @@ import { redirect } from "next/navigation";
 import { workflowClient } from "../workflow";
 import config from "../config";
 import { inngestClient } from "@/inngest";
+import { sendWelcomeEmail } from "../mails";
+import WelcomeEmail from "@/emails/welcome";
+import { WelcomeEmailTemplate } from "@/emails";
 const DOMAIN =
   process.env.NODE_ENV !== "production"
     ? config.env.apiEndpoint
@@ -106,7 +109,8 @@ export const signUp = async (params: AuthCredentials) => {
 
     // TODO: auto sign in when success
     await signInWithCredentials({ email, password });
-
+    const template = await WelcomeEmailTemplate(fullName.split(" ")[0]);
+    await sendWelcomeEmail(email, fullName, template);
     // await inngestClient.send({
     //   name: "app/user.created",
     //   data: {

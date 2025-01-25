@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Session } from "next-auth";
+import { signIn } from "next-auth/react";
+import { Button } from "./ui/button";
 
 const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
@@ -17,17 +19,6 @@ const Header = ({ session }: { session: Session }) => {
       </Link>
       <ul className="flex flex-row items-center gap-8">
         <li>
-          <Link
-            href={"/libaray"}
-            className={cn(
-              "text-base cursor-pointer capitalize",
-              pathname === "/library" ? "text-light-200" : "text-light-100",
-            )}
-          >
-            Library
-          </Link>
-        </li>
-        <li>
           <Link href={"/my-profile"}>
             <Avatar>
               {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
@@ -36,6 +27,9 @@ const Header = ({ session }: { session: Session }) => {
               </AvatarFallback>
             </Avatar>
           </Link>
+        </li>
+        <li className="text-white">
+          <Button onClick={() => signIn()}>Logout</Button>
         </li>
       </ul>
     </div>

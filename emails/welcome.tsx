@@ -6,10 +6,13 @@ import {
   Head,
   Hr,
   Html,
+  Img,
   Preview,
   Section,
+  Tailwind,
   Text,
 } from "@react-email/components";
+// import logo from "./slogo.jpg";
 import * as React from "react";
 
 interface WelcomeEmailProps {
@@ -22,29 +25,41 @@ export const WelcomeEmail = ({ userFirstname }: WelcomeEmailProps) => (
     <Preview>
       The sales intelligence platform that helps you uncover qualified leads.
     </Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Text style={paragraph}>Hi {userFirstname},</Text>
-        <Text style={paragraph}>
-          Welcome to Book Wiz! Explore our wide range of books across various
-          genres, designed to support your learning and spark your curiosity.
-        </Text>
-        <Section style={btnContainer}>
-          <Button style={button} href={config.env.domain}>
-            Get started
-          </Button>
-        </Section>
-        <Text style={paragraph}>
-          Best,
-          <br />
-          The Book Wiz Univerisity
-        </Text>
-        <Hr style={hr} />
-        <Text style={footer}>
-          470 Noor Ave STE B #1148, South San Francisco, CA 94080
-        </Text>
-      </Container>
-    </Body>
+    <Tailwind>
+      <Body style={main}>
+        <Container style={container}>
+          <div className="flex gap-2">
+            <Img
+              src="https://ik.imagekit.io/nischaldev/slogo.jpg?updatedAt=1737816347418"
+              alt="Cat"
+              width="20"
+              height="20"
+              style={{
+                textAlign: "center",
+              }}
+            />
+            Book Wiz
+          </div>
+          <Text style={paragraph}>Hi {userFirstname},</Text>
+          <Text style={paragraph}>
+            Welcome to Book Wiz! Explore our wide range of books across various
+            genres, designed to support your learning and spark your curiosity.
+          </Text>
+          <Section style={btnContainer}>
+            <Button style={button} href={config.env.domain}>
+              Get started
+            </Button>
+          </Section>
+          <Text style={paragraph}>
+            Best,
+            <br />
+            The Book Wiz Univerisity
+          </Text>
+          <Hr style={hr} />
+          <Text style={footer}>Book Wiz Univerisity</Text>
+        </Container>
+      </Body>
+    </Tailwind>
   </Html>
 );
 
@@ -79,9 +94,9 @@ const btnContainer = {
 };
 
 const button = {
-  backgroundColor: "#5F51E8",
+  backgroundColor: "#E7C9A5",
   borderRadius: "3px",
-  color: "#fff",
+  color: "#0F172A",
   fontSize: "16px",
   textDecoration: "none",
   textAlign: "center" as const,
