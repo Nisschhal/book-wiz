@@ -96,13 +96,13 @@ export const signUp = async (params: AuthCredentials) => {
 
     console.log("Triggring", DOMAIN);
     // trigger upstash workflow
-    await workflowClient.trigger({
-      url: `${DOMAIN}/api/auth/workflows/onboarding`,
-      body: {
-        email,
-        fullName,
-      },
-    });
+    // await workflowClient.trigger({
+    //   url: `${DOMAIN}/api/auth/workflows/onboarding`,
+    //   body: {
+    //     email,
+    //     fullName,
+    //   },
+    // });
 
     // TODO: auto sign in when success
     await signInWithCredentials({ email, password });

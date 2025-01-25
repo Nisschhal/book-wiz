@@ -7,8 +7,8 @@ export const { GET, POST, PUT } = serve({
   client: inngestClient,
   functions: [
     onboarding,
-    checkin,
-    sendWeeklyDigest,
+    // checkin,
+    // sendWeeklyDigest,
     /* your functions will be passed here later! */
   ],
 });

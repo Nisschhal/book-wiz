@@ -12,6 +12,7 @@ export const onboarding = inngestClient.createFunction(
       "Generating onboarding Welcome Email Template",
       async () => WelcomeEmailTemplate(name),
     );
+    console.log({ welcomeEmailTemplate });
 
     await sendWelcomeEmail(email, name, welcomeEmailTemplate);
 
