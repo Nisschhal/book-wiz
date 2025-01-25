@@ -107,12 +107,12 @@ export const signUp = async (params: AuthCredentials) => {
     // TODO: auto sign in when success
     await signInWithCredentials({ email, password });
 
-    await inngestClient.send({
-      name: "app/user.created",
-      data: {
-        email,
-      },
-    });
+    // await inngestClient.send({
+    //   name: "app/user.created",
+    //   data: {
+    //     email,
+    //   },
+    // });
 
     return { success: true };
   } catch (error) {
