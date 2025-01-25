@@ -38,7 +38,11 @@ enum EmailType {
  * @param type - Check either email is verify or reset
  * @returns - returns info of email sent
  */
-export const sendWelcomeEmail = async (email: string, fullName: string) => {
+export const sendWelcomeEmail = async (
+  email: string,
+  fullName: string,
+  template: string,
+) => {
   try {
     // Step 1: Create the transporter
     const transporter = nodemailer.createTransport({
@@ -56,7 +60,7 @@ export const sendWelcomeEmail = async (email: string, fullName: string) => {
       from: `"BookWiz" <${senderEmail}>`, // Sender address
       to: email, // Recipient address
       subject: `Welcome ${fullName}`, // Subject line
-      html: `<p>Congrats on signin up!</p>`, // HTML content
+      html: template, // HTML content
     };
 
     // Step 3: Send the email

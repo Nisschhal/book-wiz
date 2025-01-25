@@ -10,6 +10,7 @@ import ratelimit from "../ratelimit";
 import { redirect } from "next/navigation";
 import { workflowClient } from "../workflow";
 import config from "../config";
+import { inngestClient } from "@/inngest";
 const DOMAIN =
   process.env.NODE_ENV !== "production"
     ? config.env.apiEndpoint
@@ -105,6 +106,14 @@ export const signUp = async (params: AuthCredentials) => {
 
     // TODO: auto sign in when success
     await signInWithCredentials({ email, password });
+
+    await inngestClient.send({
+      name: "app/user.created",
+      data: {
+        email,
+      },
+    });
+
     return { success: true };
   } catch (error) {
     console.log("Error creating user", error);
