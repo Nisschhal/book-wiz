@@ -169,7 +169,7 @@ const FileUpload = ({
         <p className={cn("text-base text-light-100", styles.placeholder)}>
           {placeholder}
         </p>
-        {file && (
+        {file.filePath && (
           <p className={cn("upload-filename", styles.text)}>{file.filePath}</p>
         )}
       </button>
@@ -187,21 +187,21 @@ const FileUpload = ({
       )}
       {/* uploaded file */}
       {/* // image element wrapper with next/image in it  */}
-      {file &&
+      {file.filePath &&
         (type === "image" ? (
           <IKImage
-            alt={file.filePath || "Upload Image"}
+            alt={file.filePath}
             path={file.filePath}
             width={500}
             height={300}
           />
-        ) : (
+        ) : type === "video" ? (
           <IKVideo
             path={file.filePath}
             controls={true}
             className="h-96 w-full rounded-xl"
           />
-        ))}
+        ) : null)}
     </ImageKitProvider>
   );
 };

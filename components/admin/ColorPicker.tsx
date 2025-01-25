@@ -11,8 +11,8 @@ const ColorPikcer = ({ value, onPickerChange }: Props) => {
   const [isOpen, setIsOpen] = useState("false");
 
   return (
-    <div className="relative">
-      <div className="flex flex-row items-center">
+    <div className="relative flex flex-col gap-1 ">
+      <div className="flex flex-row items-center w-[80px] border rounded-md p-1 ">
         <p>#</p>
         <HexColorInput
           color={value}

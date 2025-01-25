@@ -23,7 +23,6 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
-import ImageUpload from "./ImageUpload";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { bookSchema } from "@/lib/validations";
@@ -54,6 +53,7 @@ const BookForm = ({ type, ...book }: Props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
+    console.log("clicked");
     console.log(values);
   };
   return (
@@ -116,7 +116,7 @@ const BookForm = ({ type, ...book }: Props) => {
               <FormControl>
                 <Input
                   required
-                  placeholder="Book title"
+                  placeholder="Book genre"
                   className="book-form_input"
                   {...field}
                 />
@@ -141,6 +141,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   min={1}
                   max={5}
                   required
+                  placeholder="Book rating"
                   className="book-form_input"
                   {...field}
                 />
@@ -165,7 +166,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   min={1}
                   max={10000}
                   required
-                  placeholder="Book title"
+                  placeholder="Total copies"
                   className="book-form_input"
                   {...field}
                 />
@@ -244,7 +245,7 @@ const BookForm = ({ type, ...book }: Props) => {
         {/* // Video Url */}
         <FormField
           control={form.control}
-          name={"coverUrl"}
+          name={"videoUrl"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
               <FormLabel className="text-base font-normal text-dark-500">
