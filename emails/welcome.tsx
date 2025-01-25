@@ -23,7 +23,7 @@ export const WelcomeEmail = ({ userFirstname }: WelcomeEmailProps) => (
   <Html>
     <Head />
     <Preview>
-      The sales intelligence platform that helps you uncover qualified leads.
+      Unlock your learning journey with Book Wiz – explore, learn, and grow!
     </Preview>
     <Tailwind>
       <Body style={main}>
