@@ -53,6 +53,7 @@ interface Props {
   folder: string;
   variant: "dark" | "light";
   onFileChange: (file: string) => void;
+  value?: string;
 }
 
 const FileUpload = ({
@@ -62,11 +63,14 @@ const FileUpload = ({
   folder,
   variant,
   onFileChange,
+  value,
 }: Props) => {
   // for button click to trigger imagekit uploader
   const ikUploadRef = useRef(null);
   // for path name to store
-  const [file, setFile] = useState<{ filePath: string } | null>(null);
+  const [file, setFile] = useState<{ filePath: string | null }>({
+    filePath: value ?? null,
+  });
 
   // progress sate
   const [progress, setProgres] = useState(0);
@@ -163,7 +167,7 @@ const FileUpload = ({
           className="object-contain"
         />
         <p className={cn("text-base text-light-100", styles.placeholder)}>
-          Upload a File
+          {placeholder}
         </p>
         {file && (
           <p className={cn("upload-filename", styles.text)}>{file.filePath}</p>
@@ -186,7 +190,7 @@ const FileUpload = ({
       {file &&
         (type === "image" ? (
           <IKImage
-            alt={file.filePath}
+            alt={file.filePath || "Upload Image"}
             path={file.filePath}
             width={500}
             height={300}

@@ -28,6 +28,8 @@ import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { bookSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
+import FileUpload from "@/components/FileUpload";
+import ColorPikcer from "../ColorPicker";
 
 interface Props extends Partial<Book> {
   type?: "create" | "update";
@@ -51,7 +53,9 @@ const BookForm = ({ type, ...book }: Props) => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof bookSchema>) => {};
+  const onSubmit = async (values: z.infer<typeof bookSchema>) => {
+    console.log(values);
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full">
@@ -180,7 +184,17 @@ const BookForm = ({ type, ...book }: Props) => {
                 {/* // get the key out of field_name type */}
                 Book Image
               </FormLabel>
-              <FormControl>{/* File UPload */}</FormControl>
+              <FormControl>
+                <FileUpload
+                  type="image"
+                  accept="image/*"
+                  placeholder="Upload a book cover"
+                  folder="books/covers"
+                  variant="light"
+                  onFileChange={field.onChange}
+                  value={field.value}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -195,7 +209,12 @@ const BookForm = ({ type, ...book }: Props) => {
                 {/* // get the key out of field_name type */}
                 Primary Color
               </FormLabel>
-              <FormControl>{/* color picker*/}</FormControl>
+              <FormControl>
+                <ColorPikcer
+                  onPickerChange={field.onChange}
+                  value={field.value}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -232,7 +251,17 @@ const BookForm = ({ type, ...book }: Props) => {
                 {/* // get the key out of field_name type */}
                 Book Trailer
               </FormLabel>
-              <FormControl>{/* File UPload */}</FormControl>
+              <FormControl>
+                <FileUpload
+                  type="video"
+                  accept="video/*"
+                  placeholder="Upload a book trailer"
+                  folder="books/videos"
+                  variant="light"
+                  onFileChange={field.onChange}
+                  value={field.value}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
