@@ -97,6 +97,7 @@ const AuthForm = <T extends FieldValues>({
                       <ImageUpload onFileChange={field.onChange} />
                     ) : (
                       <Input
+                        required
                         className="form-input"
                         type={
                           FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]
